@@ -1,0 +1,28 @@
+"use client";
+
+import { useUser } from "@/lib/UserContext";
+
+export default function TopBar({ courseFlag = "🇪🇸" }: { courseFlag?: string }) {
+  const { user } = useUser();
+
+  return (
+    <div className="flex items-center justify-between gap-4 px-4 py-3 border-b-2 border-[var(--duo-border)] bg-white sticky top-0 z-20">
+      <div className="flex items-center gap-1 text-2xl select-none">{courseFlag}</div>
+      <div className="flex items-center gap-4 sm:gap-6">
+        <Stat icon="🔥" value={user?.current_streak ?? 0} color="text-orange-500" />
+        <Stat icon="💎" value={user?.gems ?? 0} color="text-blue-400" />
+        <Stat icon="❤️" value={user ? `${user.hearts}/${user.max_hearts}` : "–"} color="text-red-500" />
+        <Stat icon="⭐" value={user?.xp_total ?? 0} color="text-yellow-500" />
+      </div>
+    </div>
+  );
+}
+
+function Stat({ icon, value, color }: { icon: string; value: string | number; color: string }) {
+  return (
+    <div className={`flex items-center gap-1 font-extrabold text-sm sm:text-base ${color}`}>
+      <span className="text-lg sm:text-xl">{icon}</span>
+      <span className="text-[var(--duo-gray-dark)]">{value}</span>
+    </div>
+  );
+}
