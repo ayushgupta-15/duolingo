@@ -1,0 +1,123 @@
+@import "tailwindcss";
+
+:root {
+  --duo-green: #58cc02;
+  --duo-green-dark: #58a700;
+  --duo-blue: #1cb0f6;
+  --duo-blue-dark: #1899d6;
+  --duo-red: #ff4b4b;
+  --duo-red-dark: #ea2b2b;
+  --duo-yellow: #ffc800;
+  --duo-yellow-dark: #e6b800;
+  --duo-purple: #ce82ff;
+  --duo-purple-dark: #a568cc;
+  --duo-gray: #afafaf;
+  --duo-gray-dark: #4b4b4b;
+  --duo-bg: #ffffff;
+  --duo-bg-soft: #f7f7f7;
+  --duo-border: #e5e5e5;
+
+  --background: var(--duo-bg);
+  --foreground: var(--duo-gray-dark);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-duo-green: var(--duo-green);
+  --color-duo-blue: var(--duo-blue);
+  --color-duo-red: var(--duo-red);
+  --color-duo-yellow: var(--duo-yellow);
+  --color-duo-purple: var(--duo-purple);
+  --font-sans: var(--font-nunito);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-nunito), sans-serif;
+}
+
+/* ---- Duolingo's signature chunky 3D button ---- */
+.duo-btn {
+  border-radius: 16px;
+  border-width: 2px;
+  border-bottom-width: 5px;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  transition: transform 0.04s ease, border-bottom-width 0.04s ease, margin-top 0.04s ease;
+  user-select: none;
+}
+.duo-btn:active:not(:disabled) {
+  border-bottom-width: 2px;
+  margin-top: 3px;
+}
+.duo-btn:disabled {
+  cursor: not-allowed;
+}
+
+.duo-btn-green {
+  background: var(--duo-green);
+  border-color: var(--duo-green-dark);
+  color: white;
+}
+.duo-btn-green:disabled {
+  background: var(--duo-border);
+  border-color: #d3d3d3;
+  color: var(--duo-gray);
+}
+
+.duo-btn-blue {
+  background: var(--duo-blue);
+  border-color: var(--duo-blue-dark);
+  color: white;
+}
+
+.duo-btn-red {
+  background: var(--duo-red);
+  border-color: var(--duo-red-dark);
+  color: white;
+}
+
+.duo-btn-outline {
+  background: white;
+  border-color: var(--duo-border);
+  color: var(--duo-gray-dark);
+}
+.duo-btn-outline:hover:not(:disabled) {
+  background: var(--duo-bg-soft);
+}
+
+.duo-card {
+  border-radius: 16px;
+  border: 2px solid var(--duo-border);
+  background: white;
+}
+
+@keyframes duo-pop {
+  0% { transform: scale(0.9); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.duo-pop {
+  animation: duo-pop 0.2s ease-out;
+}
+
+@keyframes duo-shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-6px); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+}
+.duo-shake {
+  animation: duo-shake 0.35s ease-in-out;
+}
+
+@keyframes duo-slide-up {
+  0% { transform: translateY(100%); }
+  100% { transform: translateY(0); }
+}
+.duo-slide-up {
+  animation: duo-slide-up 0.2s ease-out;
+}
