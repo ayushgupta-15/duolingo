@@ -1,11 +1,19 @@
 import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.database import Base, engine
+from app.database import Base, engine, DB_PATH
 from app import models  # noqa: F401 -- registers models on Base before create_all
 from app.routers import path, lessons, user, leaderboard, dev
 
+db_existed = DB_PATH.exists()
 Base.metadata.create_all(bind=engine)
+if not db_existed:
+    # First boot with no database file (fresh deploy, or a free-tier host that
+    # wiped the ephemeral disk on restart): seed it so the app is never left
+    # serving an empty, broken course.
+    from app.seed.seed_data import seed
+
+    seed()
 
 app = FastAPI(title="Duolingo Clone API")
 

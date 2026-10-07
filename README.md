@@ -122,6 +122,23 @@ app_state(id=1, day_offset)   -- singleton; backs the virtual-clock dev endpoint
 | GET    | `/api/leaderboard`                | Users ranked by total XP                              |
 | POST   | `/api/dev/advance-day?days=1`     | Shift the virtual "today" (streak testing helper)     |
 
+## Deployment Notes
+
+- Backend (Render free web service): root directory `backend`, build command
+  `pip install -r requirements.txt`, start command
+  `uvicorn app.main:app --host 0.0.0.0 --port $PORT`. Set the `CORS_ORIGINS` env
+  var to the deployed frontend's origin.
+- Frontend (Vercel): root directory `frontend`, set `NEXT_PUBLIC_API_URL` to the
+  deployed backend's URL.
+- **Known limitation:** Render's free tier has an ephemeral filesystem — the
+  SQLite file is wiped on every redeploy or on spin-down after 15 minutes of
+  inactivity. `app/main.py` detects a missing database file on boot and
+  re-seeds automatically, so the app never serves a broken/empty state, but
+  progress made during one "session" (until the instance idles out) won't
+  survive a cold start on the free tier. A paid instance with a persistent
+  disk (or swapping SQLite for Render Postgres) would fix this; out of scope
+  for this assignment's instance tier.
+
 ## Assumptions
 
 - Real auth, payments/gems economy, friends/social, and multiple languages are out of scope per
