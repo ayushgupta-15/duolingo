@@ -1,0 +1,9 @@
+# Python / FastAPI (frontend/ has its own .gitignore from create-next-app)
+backend/venv/
+backend/__pycache__/
+backend/**/__pycache__/
+backend/*.db
+backend/.env
+
+# OS
+.DS_Store
