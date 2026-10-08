@@ -36,8 +36,8 @@ export default function MultipleChoiceExercise({
               disabled={disabled}
               onClick={() => pick(i)}
               className={`duo-btn duo-btn-outline text-left px-4 py-4 font-bold ${
-                isSelected ? "!border-[var(--duo-blue)] !bg-blue-50 !text-[var(--duo-blue)]" : ""
-              } ${isAnswer ? "!border-[var(--duo-green)] !bg-green-50 !text-[var(--duo-green)]" : ""}`}
+                isSelected ? "!border-[var(--duo-blue)] !bg-blue-50 dark:!bg-blue-500/10 !text-[var(--duo-blue)]" : ""
+              } ${isAnswer ? "!border-[var(--duo-green)] !bg-green-50 dark:!bg-green-500/10 !text-[var(--duo-green)]" : ""}`}
             >
               {opt}
             </button>

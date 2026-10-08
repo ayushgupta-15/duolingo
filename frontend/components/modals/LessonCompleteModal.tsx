@@ -32,11 +32,11 @@ export default function LessonCompleteModal({
           </p>
 
           <div className="grid grid-cols-2 gap-3 mb-6">
-            <div className="bg-yellow-50 border-2 border-yellow-200 rounded-2xl py-4">
-              <div className="text-2xl font-black text-yellow-600 duo-count-up">+{displayedXp} XP</div>
+            <div className="bg-yellow-50 dark:bg-yellow-500/10 border-2 border-yellow-200 dark:border-yellow-800 rounded-2xl py-4">
+              <div className="text-2xl font-black text-yellow-600 dark:text-yellow-400 duo-count-up">+{displayedXp} XP</div>
               <div className="text-xs font-bold text-[var(--duo-gray)]">Total earned</div>
             </div>
-            <div className="bg-orange-50 border-2 border-orange-200 rounded-2xl py-4">
+            <div className="bg-orange-50 dark:bg-orange-500/10 border-2 border-orange-200 dark:border-orange-800 rounded-2xl py-4">
               <div className="text-2xl font-black text-orange-500 flex items-center justify-center gap-1">
                 <FlameIcon size={24} className="duo-flame-pulse" /> {newStreak}
               </div>

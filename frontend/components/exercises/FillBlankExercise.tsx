@@ -44,8 +44,8 @@ export default function FillBlankExercise({
               disabled={disabled}
               onClick={() => pick(opt)}
               className={`duo-btn duo-btn-outline px-5 py-3 font-bold ${
-                isSelected ? "!border-[var(--duo-blue)] !bg-blue-50 !text-[var(--duo-blue)]" : ""
-              } ${isAnswer ? "!border-[var(--duo-green)] !bg-green-50 !text-[var(--duo-green)]" : ""}`}
+                isSelected ? "!border-[var(--duo-blue)] !bg-blue-50 dark:!bg-blue-500/10 !text-[var(--duo-blue)]" : ""
+              } ${isAnswer ? "!border-[var(--duo-green)] !bg-green-50 dark:!bg-green-500/10 !text-[var(--duo-green)]" : ""}`}
             >
               {opt}
             </button>
