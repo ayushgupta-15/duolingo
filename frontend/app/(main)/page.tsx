@@ -8,6 +8,7 @@ import SkillNode from "@/components/SkillNode";
 import RightRail from "@/components/RightRail";
 import PathConnector from "@/components/PathConnector";
 import { TrophyIcon } from "@/components/icons";
+import { PathSkeleton } from "@/components/Skeleton";
 
 // A tight 3-node zigzag so the path visibly snakes left-right-left even
 // within a short unit, instead of a slow sine wave that only bends over
@@ -33,7 +34,7 @@ export default function HomePage() {
   }, []);
 
   if (loading || !path) {
-    return <div className="flex items-center justify-center h-full py-24 text-[var(--duo-gray)] font-bold">Loading your path...</div>;
+    return <PathSkeleton />;
   }
 
   const allSkills: SkillNodeType[] = path.units.flatMap((u) => u.skills);
@@ -129,7 +130,7 @@ function GuidebookButton() {
         📖
       </button>
       {showTooltip && (
-        <div className="duo-pop absolute right-0 top-12 bg-white text-[var(--duo-gray-dark)] text-xs font-bold px-3 py-2 rounded-xl shadow-lg border-2 border-[var(--duo-border)] whitespace-nowrap z-10">
+        <div className="duo-pop absolute right-0 top-12 bg-[var(--duo-surface)] text-[var(--duo-gray-dark)] text-xs font-bold px-3 py-2 rounded-xl shadow-lg border-2 border-[var(--duo-border)] whitespace-nowrap z-10">
           Unit guidebook — Coming Soon
         </div>
       )}

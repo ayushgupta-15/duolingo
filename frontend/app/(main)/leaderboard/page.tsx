@@ -27,7 +27,7 @@ export default function LeaderboardPage() {
           {entries.map((e) => (
             <div
               key={e.username}
-              className={`flex items-center gap-4 px-5 py-4 ${e.is_me ? "bg-blue-50" : ""}`}
+              className={`flex items-center gap-4 px-5 py-4 ${e.is_me ? "bg-blue-50 dark:bg-blue-500/10" : ""}`}
             >
               <span className="w-8 flex justify-center">
                 {e.rank <= 3 ? (

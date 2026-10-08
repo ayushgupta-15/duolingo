@@ -13,6 +13,7 @@ import OutOfHeartsModal from "@/components/modals/OutOfHeartsModal";
 import LessonCompleteModal from "@/components/modals/LessonCompleteModal";
 import FloatingToast from "@/components/FloatingToast";
 import { HeartIcon } from "@/components/icons";
+import { LessonSkeleton } from "@/components/Skeleton";
 
 type Feedback = { correct: boolean; correctAnswer: any };
 type Toast = { id: number; text: string; color: string };
@@ -52,7 +53,7 @@ export default function LessonPageClient({ skillId }: { skillId: number }) {
   }, [skillId]);
 
   if (!lesson || !user) {
-    return <div className="flex items-center justify-center h-screen text-[var(--duo-gray)] font-bold">Loading lesson...</div>;
+    return <LessonSkeleton />;
   }
 
   const exercise: Exercise = lesson.exercises[index];
@@ -104,7 +105,7 @@ export default function LessonPageClient({ skillId }: { skillId: number }) {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-white">
+    <div className="min-h-screen flex flex-col bg-[var(--duo-bg)]">
       <div className="flex items-center gap-4 px-4 py-4 max-w-2xl w-full mx-auto">
         <button onClick={() => router.push("/")} className="text-2xl text-[var(--duo-gray)] font-bold">
           ✕
@@ -131,7 +132,7 @@ export default function LessonPageClient({ skillId }: { skillId: number }) {
       </div>
 
       {!feedback && (
-        <div className="sticky bottom-0 border-t-2 border-[var(--duo-border)] bg-white">
+        <div className="sticky bottom-0 border-t-2 border-[var(--duo-border)] bg-[var(--duo-bg)]">
           <div className="max-w-2xl mx-auto px-4 py-5 flex justify-end">
             <button
               onClick={handleCheck}

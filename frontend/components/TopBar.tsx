@@ -13,7 +13,7 @@ export default function TopBar({ courseFlag = "🇪🇸" }: { courseFlag?: strin
   const [pickerOpen, setPickerOpen] = useState(false);
 
   return (
-    <div className="flex items-center justify-between gap-4 px-4 py-3 border-b-2 border-[var(--duo-border)] bg-white sticky top-0 z-20">
+    <div className="flex items-center justify-between gap-4 px-4 py-3 border-b-2 border-[var(--duo-border)] bg-[var(--duo-surface)] sticky top-0 z-20">
       <button
         onClick={() => setPickerOpen(true)}
         className="flex items-center gap-1 text-2xl select-none hover:bg-[var(--duo-bg-soft)] rounded-xl px-2 py-1"

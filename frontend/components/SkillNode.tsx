@@ -32,9 +32,9 @@ export default function SkillNode({
       style={{ transform: `translateX(${offset}px)`, animationDelay: `${Math.min(delayIndex, 10) * 60}ms` }}
     >
       {isCurrent && (
-        <div className="absolute -top-9 bg-white border-2 border-[var(--duo-border)] text-[var(--duo-blue)] font-extrabold text-xs uppercase px-3 py-1 rounded-xl shadow-sm animate-bounce">
+        <div className="absolute -top-9 bg-[var(--duo-surface)] border-2 border-[var(--duo-border)] text-[var(--duo-blue)] font-extrabold text-xs uppercase px-3 py-1 rounded-xl shadow-sm animate-bounce">
           Start
-          <div className="absolute left-1/2 -bottom-[7px] -translate-x-1/2 w-3 h-3 bg-white border-r-2 border-b-2 border-[var(--duo-border)] rotate-45" />
+          <div className="absolute left-1/2 -bottom-[7px] -translate-x-1/2 w-3 h-3 bg-[var(--duo-surface)] border-r-2 border-b-2 border-[var(--duo-border)] rotate-45" />
         </div>
       )}
       <button

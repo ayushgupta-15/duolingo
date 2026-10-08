@@ -29,7 +29,7 @@ export default function Sidebar() {
               href={item.href as any}
               className={`flex items-center gap-3 px-3 py-3 rounded-2xl font-bold text-sm uppercase tracking-wide border-2 ${
                 active
-                  ? "bg-blue-50 border-[var(--duo-blue)] text-[var(--duo-blue)]"
+                  ? "bg-blue-50 dark:bg-blue-500/10 border-[var(--duo-blue)] text-[var(--duo-blue)]"
                   : "border-transparent text-[var(--duo-gray-dark)] hover:bg-[var(--duo-bg-soft)]"
               }`}
             >
@@ -41,7 +41,7 @@ export default function Sidebar() {
       </nav>
 
       {/* Mobile bottom nav */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 border-t-2 border-[var(--duo-border)] bg-white flex justify-around py-2 z-20">
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 border-t-2 border-[var(--duo-border)] bg-[var(--duo-surface)] flex justify-around py-2 z-20">
         {NAV_ITEMS.map((item) => {
           const active = pathname === item.href;
           return (
