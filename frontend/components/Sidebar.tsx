@@ -18,7 +18,7 @@ export default function Sidebar() {
       {/* Desktop sidebar */}
       <nav className="hidden md:flex md:flex-col md:w-60 md:shrink-0 border-r-2 border-[var(--duo-border)] px-3 py-6 gap-1">
         <div className="px-3 mb-6 flex items-center gap-2">
-          <span className="text-3xl">🦉</span>
+          <span className="text-3xl duo-idle-bounce inline-block">🦉</span>
           <span className="text-2xl font-black text-[var(--duo-green)]">lingo</span>
         </div>
         {NAV_ITEMS.map((item) => {
