@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { api, LeaderboardEntry, UserState } from "@/lib/api";
+import { MedalIcon, StarIcon, TrophyIcon } from "@/components/icons";
 
 export default function RightRail({ user }: { user: UserState | null }) {
   const [leaders, setLeaders] = useState<LeaderboardEntry[] | null>(null);
@@ -23,7 +24,7 @@ export default function RightRail({ user }: { user: UserState | null }) {
           <h3 className="font-black text-sm uppercase tracking-wide text-[var(--duo-gray-dark)]">Daily Quest</h3>
         </div>
         <div className="flex items-center gap-3">
-          <span className="text-3xl">⭐</span>
+          <StarIcon size={30} className="text-[var(--duo-yellow)]" />
           <div className="flex-1">
             <div className="text-sm font-bold mb-1">
               Earn {user.daily_goal_xp} XP
@@ -44,7 +45,7 @@ export default function RightRail({ user }: { user: UserState | null }) {
       <div className="duo-card p-5">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
-            <span className="text-xl">🏆</span>
+            <TrophyIcon size={20} className="text-[var(--duo-yellow)]" />
             <h3 className="font-black text-sm uppercase tracking-wide text-[var(--duo-gray-dark)]">Leaderboard</h3>
           </div>
         </div>
@@ -54,7 +55,13 @@ export default function RightRail({ user }: { user: UserState | null }) {
           <div className="flex flex-col gap-3 mb-4">
             {leaders.map((e) => (
               <div key={e.username} className="flex items-center gap-3">
-                <span className="text-lg w-5 text-center">{e.rank}</span>
+                <span className="w-5 flex justify-center">
+                  {e.rank <= 3 ? (
+                    <MedalIcon rank={e.rank} size={18} />
+                  ) : (
+                    <span className="text-sm font-black text-[var(--duo-gray)]">{e.rank}</span>
+                  )}
+                </span>
                 <span className="text-2xl">{e.avatar_emoji}</span>
                 <span className={`flex-1 text-sm font-bold ${e.is_me ? "text-[var(--duo-blue)]" : ""}`}>
                   {e.display_name}

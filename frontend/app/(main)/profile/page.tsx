@@ -1,6 +1,7 @@
 "use client";
 
 import { useUser } from "@/lib/UserContext";
+import { CrownIcon, FlameIcon, HeartIcon, StarIcon, TrophyIcon } from "@/components/icons";
 
 export default function ProfilePage() {
   const { user, loading } = useUser();
@@ -10,9 +11,9 @@ export default function ProfilePage() {
   }
 
   const achievements = [
-    { icon: "🔥", label: "7-Day Streak", earned: user.longest_streak >= 7 },
+    { icon: <FlameIcon size={32} className="text-orange-500" />, label: "7-Day Streak", earned: user.longest_streak >= 7 },
     { icon: "💯", label: "Century Club (100 XP)", earned: user.xp_total >= 100 },
-    { icon: "👑", label: "First Crown", earned: true },
+    { icon: <CrownIcon size={32} className="text-[var(--duo-yellow)]" />, label: "First Crown", earned: true },
     { icon: "🎯", label: "Daily Goal Hit", earned: user.daily_xp_progress >= user.daily_goal_xp },
   ];
 
@@ -29,10 +30,10 @@ export default function ProfilePage() {
       </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
-        <StatCard icon="⭐" label="Total XP" value={user.xp_total} color="text-yellow-500" />
-        <StatCard icon="🔥" label="Current Streak" value={user.current_streak} color="text-orange-500" />
-        <StatCard icon="🏆" label="Longest Streak" value={user.longest_streak} color="text-orange-500" />
-        <StatCard icon="❤️" label="Hearts" value={`${user.hearts}/${user.max_hearts}`} color="text-red-500" />
+        <StatCard icon={<StarIcon size={26} />} label="Total XP" value={user.xp_total} color="text-yellow-500" />
+        <StatCard icon={<FlameIcon size={26} />} label="Current Streak" value={user.current_streak} color="text-orange-500" />
+        <StatCard icon={<TrophyIcon size={26} />} label="Longest Streak" value={user.longest_streak} color="text-orange-500" />
+        <StatCard icon={<HeartIcon size={26} />} label="Hearts" value={`${user.hearts}/${user.max_hearts}`} color="text-red-500" />
       </div>
 
       <h2 className="font-black text-lg mb-3">Achievements</h2>
@@ -42,7 +43,7 @@ export default function ProfilePage() {
             key={a.label}
             className={`duo-card p-4 flex flex-col items-center text-center gap-2 ${a.earned ? "" : "opacity-40 grayscale"}`}
           >
-            <span className="text-4xl">{a.icon}</span>
+            <span className="text-4xl flex items-center justify-center h-9">{a.icon}</span>
             <span className="text-xs font-bold">{a.label}</span>
           </div>
         ))}
@@ -56,10 +57,10 @@ export default function ProfilePage() {
   );
 }
 
-function StatCard({ icon, label, value, color }: { icon: string; label: string; value: string | number; color: string }) {
+function StatCard({ icon, label, value, color }: { icon: React.ReactNode; label: string; value: string | number; color: string }) {
   return (
     <div className="duo-card p-4 flex flex-col items-center text-center gap-1">
-      <span className={`text-2xl ${color}`}>{icon}</span>
+      <span className={color}>{icon}</span>
       <span className="font-black text-lg">{value}</span>
       <span className="text-xs text-[var(--duo-gray)] font-bold">{label}</span>
     </div>

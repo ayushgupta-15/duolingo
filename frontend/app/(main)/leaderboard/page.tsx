@@ -2,8 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { api, LeaderboardEntry } from "@/lib/api";
-
-const MEDALS: Record<number, string> = { 1: "🥇", 2: "🥈", 3: "🥉" };
+import { MedalIcon, TrophyIcon } from "@/components/icons";
 
 export default function LeaderboardPage() {
   const [entries, setEntries] = useState<LeaderboardEntry[] | null>(null);
@@ -15,7 +14,9 @@ export default function LeaderboardPage() {
   return (
     <div className="max-w-xl mx-auto px-4 py-8">
       <div className="text-center mb-6">
-        <h1 className="text-2xl font-black">🏆 Leaderboard</h1>
+        <h1 className="text-2xl font-black flex items-center justify-center gap-2">
+          <TrophyIcon size={26} className="text-[var(--duo-yellow)]" /> Leaderboard
+        </h1>
         <p className="text-[var(--duo-gray)] font-bold text-sm mt-1">This week's top learners</p>
       </div>
 
@@ -28,7 +29,13 @@ export default function LeaderboardPage() {
               key={e.username}
               className={`flex items-center gap-4 px-5 py-4 ${e.is_me ? "bg-blue-50" : ""}`}
             >
-              <span className="w-8 text-center font-black text-lg">{MEDALS[e.rank] ?? e.rank}</span>
+              <span className="w-8 flex justify-center">
+                {e.rank <= 3 ? (
+                  <MedalIcon rank={e.rank} />
+                ) : (
+                  <span className="font-black text-lg text-[var(--duo-gray)]">{e.rank}</span>
+                )}
+              </span>
               <span className="text-3xl">{e.avatar_emoji}</span>
               <span className={`flex-1 font-bold ${e.is_me ? "text-[var(--duo-blue)]" : ""}`}>
                 {e.display_name} {e.is_me && <span className="text-xs">(you)</span>}

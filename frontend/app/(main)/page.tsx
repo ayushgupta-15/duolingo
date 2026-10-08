@@ -7,6 +7,7 @@ import { useUser } from "@/lib/UserContext";
 import SkillNode from "@/components/SkillNode";
 import RightRail from "@/components/RightRail";
 import PathConnector from "@/components/PathConnector";
+import { TrophyIcon } from "@/components/icons";
 
 // A tight 3-node zigzag so the path visibly snakes left-right-left even
 // within a short unit, instead of a slow sine wave that only bends over
@@ -107,8 +108,8 @@ export default function HomePage() {
 function FinishNode() {
   return (
     <div className="flex flex-col items-center gap-2 pb-4">
-      <div className="w-20 h-20 rounded-full bg-[var(--duo-bg-soft)] border-2 border-dashed border-[var(--duo-gray)] flex items-center justify-center text-3xl opacity-60">
-        🏆
+      <div className="w-20 h-20 rounded-full bg-[var(--duo-bg-soft)] border-2 border-dashed border-[var(--duo-gray)] flex items-center justify-center opacity-60">
+        <TrophyIcon size={32} className="text-[var(--duo-gray)]" />
       </div>
       <div className="text-xs font-bold text-[var(--duo-gray)] text-center">More units coming soon</div>
     </div>
