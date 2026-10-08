@@ -2,12 +2,13 @@
 
 import { useUser } from "@/lib/UserContext";
 import { CrownIcon, FlameIcon, HeartIcon, StarIcon, TrophyIcon } from "@/components/icons";
+import { ProfileSkeleton } from "@/components/Skeleton";
 
 export default function ProfilePage() {
   const { user, loading } = useUser();
 
   if (loading || !user) {
-    return <div className="flex items-center justify-center h-full py-24 text-[var(--duo-gray)] font-bold">Loading profile...</div>;
+    return <ProfileSkeleton />;
   }
 
   const achievements = [
