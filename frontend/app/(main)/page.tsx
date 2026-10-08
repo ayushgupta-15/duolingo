@@ -57,6 +57,7 @@ export default function HomePage() {
           <div className="flex flex-col items-center gap-10">
             {unit.skills.map((skill) => {
               const offset = OFFSET_PATTERN[globalIndex % OFFSET_PATTERN.length];
+              const delayIndex = globalIndex;
               globalIndex += 1;
               return (
                 <SkillNode
@@ -64,6 +65,7 @@ export default function HomePage() {
                   skill={skill}
                   unitColor={unit.color}
                   offset={offset}
+                  delayIndex={delayIndex}
                   isCurrent={skill.id === currentSkillId}
                   onClick={() => {
                     if (skill.status !== "locked") router.push(`/lesson/${skill.id}`);

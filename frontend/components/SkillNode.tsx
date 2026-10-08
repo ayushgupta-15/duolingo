@@ -9,12 +9,14 @@ export default function SkillNode({
   unitColor,
   isCurrent,
   offset,
+  delayIndex = 0,
   onClick,
 }: {
   skill: SkillNodeType;
   unitColor: string;
   isCurrent: boolean;
   offset: number;
+  delayIndex?: number;
   onClick: () => void;
 }) {
   const locked = skill.status === "locked";
@@ -24,7 +26,10 @@ export default function SkillNode({
   const border = locked ? "#CFCFCF" : completed ? "var(--duo-yellow-dark)" : shade(unitColor);
 
   return (
-    <div className="relative flex flex-col items-center" style={{ transform: `translateX(${offset}px)` }}>
+    <div
+      className="duo-node-in relative flex flex-col items-center"
+      style={{ transform: `translateX(${offset}px)`, animationDelay: `${Math.min(delayIndex, 10) * 60}ms` }}
+    >
       {isCurrent && (
         <div className="absolute -top-9 bg-white border-2 border-[var(--duo-border)] text-[var(--duo-blue)] font-extrabold text-xs uppercase px-3 py-1 rounded-xl shadow-sm animate-bounce">
           Start
@@ -34,7 +39,9 @@ export default function SkillNode({
       <button
         onClick={onClick}
         disabled={locked}
-        className="duo-btn w-20 h-20 flex items-center justify-center text-3xl disabled:cursor-not-allowed"
+        className={`duo-btn w-20 h-20 flex items-center justify-center text-3xl disabled:cursor-not-allowed ${
+          completed ? "duo-glow-ring" : ""
+        }`}
         style={{ background: bg, borderColor: border, borderRadius: "9999px" }}
         title={skill.title}
       >
