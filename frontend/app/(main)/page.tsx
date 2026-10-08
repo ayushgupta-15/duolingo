@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { api, PathResponse, SkillNode as SkillNodeType } from "@/lib/api";
 import { useUser } from "@/lib/UserContext";
 import SkillNode from "@/components/SkillNode";
+import RightRail from "@/components/RightRail";
 
 const OFFSET_PATTERN = [0, 70, 100, 70, 0, -70, -100, -70];
 
@@ -32,50 +33,70 @@ export default function HomePage() {
   let globalIndex = 0;
 
   return (
-    <div className="max-w-xl mx-auto px-4 py-8">
-      <div className="text-center mb-4">
-        <h1 className="text-2xl font-black text-[var(--duo-gray-dark)]">{path.course_title}</h1>
-        {user && (
-          <p className="text-sm text-[var(--duo-gray)] font-bold mt-1">
-            Daily goal: {user.daily_xp_progress}/{user.daily_goal_xp} XP
-          </p>
-        )}
-      </div>
+    <div className="flex justify-center max-w-5xl mx-auto">
+      <div className="max-w-xl w-full px-4 py-8">
+        <div className="text-center mb-4">
+          <h1 className="text-2xl font-black text-[var(--duo-gray-dark)]">{path.course_title}</h1>
+        </div>
 
-      {path.units.map((unit) => (
-        <div key={unit.id} className="mb-10">
-          <div
-            className="rounded-2xl px-5 py-4 mb-8 text-white shadow-sm flex items-center justify-between"
-            style={{ background: unit.color }}
-          >
-            <div>
-              <div className="font-black text-lg">{unit.title}</div>
-              <div className="text-sm opacity-90 font-semibold">{unit.description}</div>
+        {path.units.map((unit) => (
+          <div key={unit.id} className="mb-10">
+            <div
+              className="rounded-2xl px-5 py-4 mb-8 text-white shadow-sm flex items-center justify-between"
+              style={{ background: unit.color }}
+            >
+              <div>
+                <div className="font-black text-lg">{unit.title}</div>
+                <div className="text-sm opacity-90 font-semibold">{unit.description}</div>
+              </div>
+              <GuidebookButton />
+            </div>
+
+            <div className="flex flex-col items-center gap-10">
+              {unit.skills.map((skill) => {
+                const offset = OFFSET_PATTERN[globalIndex % OFFSET_PATTERN.length];
+                const delayIndex = globalIndex;
+                globalIndex += 1;
+                return (
+                  <SkillNode
+                    key={skill.id}
+                    skill={skill}
+                    unitColor={unit.color}
+                    offset={offset}
+                    delayIndex={delayIndex}
+                    isCurrent={skill.id === currentSkillId}
+                    onClick={() => {
+                      if (skill.status !== "locked") router.push(`/lesson/${skill.id}`);
+                    }}
+                  />
+                );
+              })}
             </div>
           </div>
+        ))}
+      </div>
+      <RightRail user={user} />
+    </div>
+  );
+}
 
-          <div className="flex flex-col items-center gap-10">
-            {unit.skills.map((skill) => {
-              const offset = OFFSET_PATTERN[globalIndex % OFFSET_PATTERN.length];
-              const delayIndex = globalIndex;
-              globalIndex += 1;
-              return (
-                <SkillNode
-                  key={skill.id}
-                  skill={skill}
-                  unitColor={unit.color}
-                  offset={offset}
-                  delayIndex={delayIndex}
-                  isCurrent={skill.id === currentSkillId}
-                  onClick={() => {
-                    if (skill.status !== "locked") router.push(`/lesson/${skill.id}`);
-                  }}
-                />
-              );
-            })}
-          </div>
+function GuidebookButton() {
+  const [showTooltip, setShowTooltip] = useState(false);
+  return (
+    <div className="relative">
+      <button
+        onClick={() => setShowTooltip((v) => !v)}
+        onBlur={() => setShowTooltip(false)}
+        className="w-10 h-10 rounded-xl bg-white/20 hover:bg-white/30 flex items-center justify-center text-xl shrink-0"
+        title="Guidebook"
+      >
+        📖
+      </button>
+      {showTooltip && (
+        <div className="duo-pop absolute right-0 top-12 bg-white text-[var(--duo-gray-dark)] text-xs font-bold px-3 py-2 rounded-xl shadow-lg border-2 border-[var(--duo-border)] whitespace-nowrap z-10">
+          Unit guidebook — Coming Soon
         </div>
-      ))}
+      )}
     </div>
   );
 }
