@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+/* Lets `dark:` utilities respond to a manually-toggled data-theme attribute
+ * (persisted in localStorage) instead of only the OS preference. */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
 :root {
   --duo-green: #58cc02;
   --duo-green-dark: #58a700;
@@ -15,10 +19,20 @@
   --duo-gray-dark: #4b4b4b;
   --duo-bg: #ffffff;
   --duo-bg-soft: #f7f7f7;
+  --duo-surface: #ffffff;
   --duo-border: #e5e5e5;
 
   --background: var(--duo-bg);
   --foreground: var(--duo-gray-dark);
+}
+
+:root[data-theme="dark"] {
+  --duo-gray: #8b8f96;
+  --duo-gray-dark: #e8e8ea;
+  --duo-bg: #0f1113;
+  --duo-bg-soft: #17191c;
+  --duo-surface: #1d2023;
+  --duo-border: #2e3136;
 }
 
 @theme inline {
@@ -81,7 +95,7 @@ body {
 }
 
 .duo-btn-outline {
-  background: white;
+  background: var(--duo-surface);
   border-color: var(--duo-border);
   color: var(--duo-gray-dark);
 }
@@ -92,7 +106,7 @@ body {
 .duo-card {
   border-radius: 16px;
   border: 2px solid var(--duo-border);
-  background: white;
+  background: var(--duo-surface);
 }
 
 @keyframes duo-pop {
