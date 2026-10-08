@@ -11,8 +11,8 @@ export default function OutOfHeartsModal({
 }) {
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-      <div className="duo-pop duo-card max-w-sm w-full p-6 text-center">
-        <div className="text-6xl mb-4">💔</div>
+      <div className="duo-pop-bounce duo-card max-w-sm w-full p-6 text-center">
+        <div className="text-6xl mb-4 duo-shake">💔</div>
         <h2 className="text-2xl font-black mb-2">Out of hearts!</h2>
         <p className="text-[var(--duo-gray)] font-bold mb-6">
           {minutesToNext != null
