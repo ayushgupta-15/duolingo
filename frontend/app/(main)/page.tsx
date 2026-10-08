@@ -6,11 +6,16 @@ import { api, PathResponse, SkillNode as SkillNodeType } from "@/lib/api";
 import { useUser } from "@/lib/UserContext";
 import SkillNode from "@/components/SkillNode";
 import RightRail from "@/components/RightRail";
+import PathConnector from "@/components/PathConnector";
 
 // A tight 3-node zigzag so the path visibly snakes left-right-left even
 // within a short unit, instead of a slow sine wave that only bends over
 // many nodes.
 const OFFSET_PATTERN = [0, 85, -85];
+const ROW_HEIGHT = 150;
+const CONTAINER_WIDTH = 300;
+const CENTER_X = CONTAINER_WIDTH / 2;
+const CIRCLE_RADIUS = 40;
 
 export default function HomePage() {
   const router = useRouter();
@@ -55,30 +60,57 @@ export default function HomePage() {
               <GuidebookButton />
             </div>
 
-            <div className="flex flex-col items-center gap-10">
-              {unit.skills.map((skill) => {
+            <div
+              className="relative mx-auto"
+              style={{ width: CONTAINER_WIDTH, height: unit.skills.length * ROW_HEIGHT }}
+            >
+              <PathConnector
+                offsets={unit.skills.map((_, i) => OFFSET_PATTERN[(globalIndex + i) % OFFSET_PATTERN.length])}
+                rowHeight={ROW_HEIGHT}
+                centerX={CENTER_X}
+                circleRadius={CIRCLE_RADIUS}
+                color={unit.color}
+              />
+              {unit.skills.map((skill, i) => {
                 const offset = OFFSET_PATTERN[globalIndex % OFFSET_PATTERN.length];
                 const delayIndex = globalIndex;
                 globalIndex += 1;
                 return (
-                  <SkillNode
+                  <div
                     key={skill.id}
-                    skill={skill}
-                    unitColor={unit.color}
-                    offset={offset}
-                    delayIndex={delayIndex}
-                    isCurrent={skill.id === currentSkillId}
-                    onClick={() => {
-                      if (skill.status !== "locked") router.push(`/lesson/${skill.id}`);
-                    }}
-                  />
+                    className="absolute left-1/2"
+                    style={{ top: i * ROW_HEIGHT, transform: "translateX(-50%)", zIndex: 1 }}
+                  >
+                    <SkillNode
+                      skill={skill}
+                      unitColor={unit.color}
+                      offset={offset}
+                      delayIndex={delayIndex}
+                      isCurrent={skill.id === currentSkillId}
+                      onClick={() => {
+                        if (skill.status !== "locked") router.push(`/lesson/${skill.id}`);
+                      }}
+                    />
+                  </div>
                 );
               })}
             </div>
           </div>
         ))}
+        <FinishNode />
       </div>
       <RightRail user={user} />
+    </div>
+  );
+}
+
+function FinishNode() {
+  return (
+    <div className="flex flex-col items-center gap-2 pb-4">
+      <div className="w-20 h-20 rounded-full bg-[var(--duo-bg-soft)] border-2 border-dashed border-[var(--duo-gray)] flex items-center justify-center text-3xl opacity-60">
+        🏆
+      </div>
+      <div className="text-xs font-bold text-[var(--duo-gray)] text-center">More units coming soon</div>
     </div>
   );
 }
