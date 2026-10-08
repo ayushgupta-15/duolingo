@@ -1,6 +1,7 @@
 "use client";
 
 import { SkillNode as SkillNodeType } from "@/lib/api";
+import { CrownIcon, LockIcon } from "@/components/icons";
 
 const UNIT_COLOR_FALLBACK = "#58CC02";
 
@@ -45,7 +46,13 @@ export default function SkillNode({
         style={{ background: bg, borderColor: border, borderRadius: "9999px" }}
         title={skill.title}
       >
-        {locked ? "🔒" : completed ? "👑" : skill.icon}
+        {locked ? (
+          <LockIcon size={26} className="text-[var(--duo-gray)]" />
+        ) : completed ? (
+          <CrownIcon size={32} className="text-white" />
+        ) : (
+          skill.icon
+        )}
       </button>
       <div className="flex gap-1 mt-2">
         {Array.from({ length: skill.total_levels }).map((_, i) => (
