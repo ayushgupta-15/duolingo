@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { api, Exercise, LessonResponse, UserState } from "@/lib/api";
 import MultipleChoiceExercise from "@/components/exercises/MultipleChoiceExercise";
@@ -11,8 +11,10 @@ import TypeAnswerExercise from "@/components/exercises/TypeAnswerExercise";
 import FeedbackBar from "@/components/FeedbackBar";
 import OutOfHeartsModal from "@/components/modals/OutOfHeartsModal";
 import LessonCompleteModal from "@/components/modals/LessonCompleteModal";
+import FloatingToast from "@/components/FloatingToast";
 
 type Feedback = { correct: boolean; correctAnswer: any };
+type Toast = { id: number; text: string; color: string };
 
 export default function LessonPageClient({ skillId }: { skillId: number }) {
   const router = useRouter();
@@ -29,6 +31,15 @@ export default function LessonPageClient({ skillId }: { skillId: number }) {
   const [showOutOfHearts, setShowOutOfHearts] = useState(false);
   const [complete, setComplete] = useState<{ xp: number; streak: number } | null>(null);
   const [shaking, setShaking] = useState(false);
+  const [heartShake, setHeartShake] = useState(false);
+  const [toasts, setToasts] = useState<Toast[]>([]);
+  const toastId = useRef(0);
+
+  function pushToast(text: string, color: string) {
+    const id = toastId.current++;
+    setToasts((t) => [...t, { id, text, color }]);
+    setTimeout(() => setToasts((t) => t.filter((x) => x.id !== id)), 1000);
+  }
 
   useEffect(() => {
     Promise.all([api.getLesson(skillId), api.getMe()]).then(([l, u]) => {
@@ -57,11 +68,15 @@ export default function LessonPageClient({ skillId }: { skillId: number }) {
     setFeedback({ correct: result.correct, correctAnswer: result.correct_answer });
     if (result.correct) {
       setCorrectCount((c) => c + 1);
+      pushToast(`+${exercise.xp_value} XP`, "var(--duo-green)");
     } else {
       setHeartsLost((h) => h + 1);
       setHearts((h) => Math.max(0, h - 1));
       setShaking(true);
       setTimeout(() => setShaking(false), 350);
+      setHeartShake(true);
+      setTimeout(() => setHeartShake(false), 350);
+      pushToast("-1 ❤️", "var(--duo-red)");
     }
   }
 
@@ -99,12 +114,15 @@ export default function LessonPageClient({ skillId }: { skillId: number }) {
             style={{ width: `${progressPct}%` }}
           />
         </div>
-        <div className="flex items-center gap-1 font-extrabold text-[var(--duo-red)]">
+        <div className={`relative flex items-center gap-1 font-extrabold text-[var(--duo-red)] ${heartShake ? "duo-shake" : ""}`}>
           ❤️ {hearts}
+          {toasts.map((t) => (
+            <FloatingToast key={t.id} id={t.id} text={t.text} color={t.color} />
+          ))}
         </div>
       </div>
 
-      <div className={`flex-1 max-w-2xl w-full mx-auto px-4 py-6 ${shaking ? "duo-shake" : ""}`}>
+      <div key={index} className={`duo-pop flex-1 max-w-2xl w-full mx-auto px-4 py-6 ${shaking ? "duo-shake" : ""}`}>
         {renderExercise(exercise, !!feedback, feedback?.correctAnswer, (a, ready) => {
           setAnswer(a);
           setAnswerReady(ready);
