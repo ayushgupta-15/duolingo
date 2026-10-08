@@ -12,6 +12,7 @@ import FeedbackBar from "@/components/FeedbackBar";
 import OutOfHeartsModal from "@/components/modals/OutOfHeartsModal";
 import LessonCompleteModal from "@/components/modals/LessonCompleteModal";
 import FloatingToast from "@/components/FloatingToast";
+import { HeartIcon } from "@/components/icons";
 
 type Feedback = { correct: boolean; correctAnswer: any };
 type Toast = { id: number; text: string; color: string };
@@ -76,7 +77,7 @@ export default function LessonPageClient({ skillId }: { skillId: number }) {
       setTimeout(() => setShaking(false), 350);
       setHeartShake(true);
       setTimeout(() => setHeartShake(false), 350);
-      pushToast("-1 ❤️", "var(--duo-red)");
+      pushToast("-1", "var(--duo-red)");
     }
   }
 
@@ -115,7 +116,7 @@ export default function LessonPageClient({ skillId }: { skillId: number }) {
           />
         </div>
         <div className={`relative flex items-center gap-1 font-extrabold text-[var(--duo-red)] ${heartShake ? "duo-shake" : ""}`}>
-          ❤️ {hearts}
+          <HeartIcon size={18} /> {hearts}
           {toasts.map((t) => (
             <FloatingToast key={t.id} id={t.id} text={t.text} color={t.color} />
           ))}

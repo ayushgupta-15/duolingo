@@ -2,6 +2,7 @@
 
 import { useCountUp } from "@/lib/useCountUp";
 import Confetti from "@/components/Confetti";
+import { FlameIcon } from "@/components/icons";
 
 export default function LessonCompleteModal({
   xpEarned,
@@ -36,8 +37,8 @@ export default function LessonCompleteModal({
               <div className="text-xs font-bold text-[var(--duo-gray)]">Total earned</div>
             </div>
             <div className="bg-orange-50 border-2 border-orange-200 rounded-2xl py-4">
-              <div className="text-2xl font-black text-orange-500">
-                <span className="duo-flame-pulse inline-block">🔥</span> {newStreak}
+              <div className="text-2xl font-black text-orange-500 flex items-center justify-center gap-1">
+                <FlameIcon size={24} className="duo-flame-pulse" /> {newStreak}
               </div>
               <div className="text-xs font-bold text-[var(--duo-gray)]">Day streak</div>
             </div>
