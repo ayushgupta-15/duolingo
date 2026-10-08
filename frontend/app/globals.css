@@ -121,3 +121,81 @@ body {
 .duo-slide-up {
   animation: duo-slide-up 0.2s ease-out;
 }
+
+/* ---- Bouncier overshoot pop, for modals and "big moment" UI ---- */
+@keyframes duo-pop-bounce {
+  0% { transform: scale(0.3); opacity: 0; }
+  60% { transform: scale(1.08); opacity: 1; }
+  80% { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}
+.duo-pop-bounce {
+  animation: duo-pop-bounce 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ---- Staggered node entrance on the path ---- */
+@keyframes duo-node-in {
+  0% { transform: scale(0.4) translateY(12px); opacity: 0; }
+  60% { transform: scale(1.06) translateY(0); opacity: 1; }
+  100% { transform: scale(1) translateY(0); }
+}
+.duo-node-in {
+  animation: duo-node-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* ---- Idle mascot bounce ---- */
+@keyframes duo-idle-bounce {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-3px) rotate(-4deg); }
+}
+.duo-idle-bounce {
+  animation: duo-idle-bounce 2.4s ease-in-out infinite;
+}
+
+/* ---- Streak flame pulse ---- */
+@keyframes duo-flame-pulse {
+  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 0 rgba(255, 149, 0, 0)); }
+  50% { transform: scale(1.15); filter: drop-shadow(0 0 4px rgba(255, 149, 0, 0.6)); }
+}
+.duo-flame-pulse {
+  display: inline-block;
+  animation: duo-flame-pulse 1.8s ease-in-out infinite;
+}
+
+/* ---- Completed-skill glow ring ---- */
+@keyframes duo-glow-ring {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 200, 0, 0.5); }
+  50% { box-shadow: 0 0 0 6px rgba(255, 200, 0, 0); }
+}
+.duo-glow-ring {
+  animation: duo-glow-ring 2s ease-out infinite;
+}
+
+/* ---- Floating "+XP" / "-1 heart" toast that drifts up and fades ---- */
+@keyframes duo-float-up {
+  0% { transform: translateY(0) scale(0.8); opacity: 0; }
+  15% { transform: translateY(-4px) scale(1.1); opacity: 1; }
+  80% { transform: translateY(-28px) scale(1); opacity: 1; }
+  100% { transform: translateY(-38px) scale(1); opacity: 0; }
+}
+.duo-float-up {
+  animation: duo-float-up 1s ease-out forwards;
+}
+
+/* ---- Confetti ---- */
+@keyframes duo-confetti-fall {
+  0% { transform: translateY(-10px) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(240px) rotate(540deg); opacity: 0; }
+}
+.duo-confetti-piece {
+  position: absolute;
+  top: 0;
+  animation-name: duo-confetti-fall;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.6, 1);
+  animation-fill-mode: forwards;
+}
+
+/* ---- Number count-up ticks without layout jump ---- */
+.duo-count-up {
+  font-variant-numeric: tabular-nums;
+}
