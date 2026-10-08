@@ -7,7 +7,10 @@ import { useUser } from "@/lib/UserContext";
 import SkillNode from "@/components/SkillNode";
 import RightRail from "@/components/RightRail";
 
-const OFFSET_PATTERN = [0, 70, 100, 70, 0, -70, -100, -70];
+// A tight 3-node zigzag so the path visibly snakes left-right-left even
+// within a short unit, instead of a slow sine wave that only bends over
+// many nodes.
+const OFFSET_PATTERN = [0, 85, -85];
 
 export default function HomePage() {
   const router = useRouter();
